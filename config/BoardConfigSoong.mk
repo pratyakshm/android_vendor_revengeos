@@ -43,8 +43,12 @@ SOONG_CONFIG_revengeosGlobalVars += \
     target_surfaceflinger_fod_lib \
     uses_camera_parameter_lib
 
-SOONG_CONFIG_NAMESPACES += revengeosNvidiaVars
-SOONG_CONFIG_revengeosNvidiaVars += \
+ifneq ($(TARGET_FORCE_BUILD_FINGERPRINT),)
+SOONG_CONFIG_customGlobalVars += force_build_fingerprint
+endif
+
+SOONG_CONFIG_NAMESPACES += customNvidiaVars
+SOONG_CONFIG_customNvidiaVars += \
     uses_nv_enhancements
 
 SOONG_CONFIG_NAMESPACES += revengeosQcomVars
@@ -84,13 +88,18 @@ TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY ?= libcamera_parameters
 TARGET_SURFACEFLINGER_FOD_LIB ?= surfaceflinger_fod_lib
 
 # Soong value variables
-SOONG_CONFIG_revengeosGlobalVars_additional_gralloc_10_usage_bits := $(TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS)
-SOONG_CONFIG_revengeosGlobalVars_bootloader_message_offset := $(BOOTLOADER_MESSAGE_OFFSET)
-SOONG_CONFIG_revengeosGlobalVars_target_init_vendor_lib := $(TARGET_INIT_VENDOR_LIB)
-SOONG_CONFIG_revengeosGlobalVars_target_ld_shim_libs := $(subst $(space),:,$(TARGET_LD_SHIM_LIBS))
-SOONG_CONFIG_revengeosGlobalVars_target_process_sdk_version_override := $(TARGET_PROCESS_SDK_VERSION_OVERRIDE)
-SOONG_CONFIG_revengeosGlobalVars_target_surfaceflinger_fod_lib := $(TARGET_SURFACEFLINGER_FOD_LIB)
-SOONG_CONFIG_revengeosGlobalVars_uses_camera_parameter_lib := $(TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY)
+SOONG_CONFIG_customGlobalVars_additional_gralloc_10_usage_bits := $(TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS)
+SOONG_CONFIG_customGlobalVars_bootloader_message_offset := $(BOOTLOADER_MESSAGE_OFFSET)
+SOONG_CONFIG_customGlobalVars_target_init_vendor_lib := $(TARGET_INIT_VENDOR_LIB)
+SOONG_CONFIG_customGlobalVars_target_ld_shim_libs := $(subst $(space),:,$(TARGET_LD_SHIM_LIBS))
+SOONG_CONFIG_customGlobalVars_target_process_sdk_version_override := $(TARGET_PROCESS_SDK_VERSION_OVERRIDE)
+SOONG_CONFIG_customGlobalVars_target_surfaceflinger_fod_lib := $(TARGET_SURFACEFLINGER_FOD_LIB)
+SOONG_CONFIG_customGlobalVars_uses_camera_parameter_lib := $(TARGET_SPECIFIC_CAMERA_PARAMETER_LIBRARY)
+
+ifneq ($(TARGET_FORCE_BUILD_FINGERPRINT),)
+SOONG_CONFIG_customGlobalVars_force_build_fingerprint := $(TARGET_FORCE_BUILD_FINGERPRINT)
+endif
+
 ifneq ($(filter $(UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
 SOONG_CONFIG_revengeosQcomVars_qcom_soong_namespace := $(QCOM_SOONG_NAMESPACE)
 endif
